@@ -44,10 +44,17 @@ moveDown board = transpose (moveRight (transpose board))
 
 
 
+choose :: [a] -> IO a
+choose xs = do
+    i <- randomRIO (0, length xs-1)
+    return (xs !! i)
 
-
-addRandom :: Grid -> Grid
-addRandom grid = undefined
+addRandom :: Grid -> IO Grid
+addRandom grid = do
+    let empty = findEmpty grid
+    coordinate <- choose empty
+    let new = setValue grid coordinate (Just 2)
+    return new
 
 setValue :: Grid -> (Int, Int) -> Maybe Int -> Grid
 setValue grid (row, col) val = pre ++ [mid] ++ post
