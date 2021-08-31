@@ -1,0 +1,63 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: df9d186c8b7e760da1c934be90b7ae3c7db5ec573a014afd2e6da0da4be17e9d
+
+name:           hs2048
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/hs2048#readme>
+homepage:       https://github.com/githubuser/hs2048#readme
+bug-reports:    https://github.com/githubuser/hs2048/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2021 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/hs2048
+
+library
+  exposed-modules:
+      Game
+      Lib
+  other-modules:
+      Paths_hs2048
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable hs2048-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_hs2048
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , hs2048
+  default-language: Haskell2010
+
+test-suite hs2048-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_hs2048
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , hs2048
+  default-language: Haskell2010
