@@ -6,8 +6,7 @@ import System.IO
 import Text.Printf
 import System.Random
 
-data Move = Up | Down | Right | Left
-data Player = X | O
+data Move = Up | Down | Right | Left deriving (Eq)
 
 -- | A Cell is a singular tile
 type Cell = Maybe Int
@@ -42,8 +41,6 @@ moveUp board = transpose (moveRight (transpose board))
 moveDown :: Grid -> Grid
 moveDown board = transpose (moveRight (transpose board))
 
-
-
 choose :: [a] -> IO a
 choose xs = do
     i <- randomRIO (0, length xs-1)
@@ -63,17 +60,10 @@ setValue grid (row, col) val = pre ++ [mid] ++ post
         mid  = take col (grid!!row) ++ [val] ++ drop (col + 1) (grid!!row)
         post = drop (row + 1) grid
 
-
 findEmpty grid = filter (\(row, col) -> (grid!!row)!!col == Nothing) coordinates
     where 
         singleRow n = zip (replicate 4 n) [0..length grid - 1]
         coordinates = concatMap singleRow [0..length grid - 1]
-
-
-
-
-
-
 
 canMoveRight :: Grid -> Bool
 canMoveRight grid = do
@@ -107,7 +97,21 @@ canMove :: Grid -> Bool
 canMove grid = foldr (||) False (map ($ grid) [canMoveRight, canMoveLeft, canMoveUp, canMoveDown])
 
 
+check2048 :: Grid -> Bool
+check2048 grid = [] /= filter (== Just 2048) (concat grid)
 
+
+moves :: [(Char, Move)]
+moves = zip "wasd" [Up, Down, Left, Right]
+
+
+getMove :: IO Move
+getMove = do
+    input <- getChar
+    case lookup input moves of
+        Just x  -> return x
+        Nothing -> do putStrLn "Use WASD or CHTN as input"
+                      getMove
 
 
 
